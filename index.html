@@ -5,304 +5,367 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minato | Ultimate Leveling Bot</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         /* --- CSS STYLES --- */
-        
+
+        :root {
+            --bg: #1f2029;          /* page background */
+            --bg-card: #282a36;     /* cards / buttons */
+            --bg-dark: #16171d;     /* footer */
+            --accent: #ac8efd;      /* purple */
+            --accent-dark: #8f6df0;
+            --text: #ffffff;
+            --muted: #b4b6c4;
+        }
+
         /* Reset & Base */
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #00004B; /* Midnight Blue */
-            color: #fff;
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
         }
-        a { text-decoration: none; color: white; }
-        
-        /* Utility: Scrollbar */
+        h1, h2, h3 { font-family: 'Poppins', sans-serif; }
+        a { text-decoration: none; color: inherit; }
+        [hidden] { display: none !important; }
+
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 10px; }
-        ::-webkit-scrollbar-track { background: #000029; }
-        ::-webkit-scrollbar-thumb { background: #FDD501; border-radius: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
 
         /* Navbar */
         .navbar {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background-color: rgba(0, 0, 75, 0.95);
+            justify-content: space-between;
+            padding: 14px 3%;
+            background-color: var(--bg);
+            border-top: 6px solid var(--accent);
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
             z-index: 1000;
-            border-bottom: 2px solid #FDD501;
         }
-        
-        /* LOGO STYLING (Round + Border) */
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 28px; }
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #FDD501;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .logo img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%; /* Makes it round */
-            border: 2px solid #FDD501; /* Yellow Border */
-            object-fit: cover;
-        }
-        
-        .nav-links a {
-            margin-left: 25px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-        .nav-links a:hover { color: #FDD501; }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 140px 10% 100px; 
-            min-height: 90vh;
-            background: radial-gradient(circle at top right, #1a1a6e, #00004B);
-        }
-        .hero-content { max-width: 55%; }
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 15px;
-            line-height: 1.1;
-            background: -webkit-linear-gradient(#fff, #FDD501);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 35px;
-            color: #cccccc;
-            border-left: 4px solid #FDD501;
-            padding-left: 15px;
-        }
-        .buttons { display: flex; gap: 20px; flex-wrap: wrap; }
-        .btn {
-            padding: 12px 35px;
-            border-radius: 5px;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 213, 1, 0.3); }
-        .btn-primary { background-color: #FDD501; color: #00004B; }
-        .btn-secondary { border: 2px solid #FDD501; color: #FDD501; background: transparent; }
-        .btn-secondary:hover { background-color: #FDD501; color: #00004B; }
-        
-        /* HERO IMAGE STYLING (Round + Border) */
-        .hero-image img {
-            width: 400px;
-            height: 400px;
-            border-radius: 50%; /* Makes it round */
-            border: 6px solid #FDD501; /* Thick Yellow Border */
-            object-fit: cover; /* Prevents stretching */
-            box-shadow: 0 0 30px rgba(253, 213, 1, 0.3);
-            animation: float 4s ease-in-out infinite;
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+        }
+        .nav-links { display: flex; align-items: center; gap: 28px; }
+        .nav-links a, .dropdown-toggle {
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fff;
+            transition: 0.25s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .nav-links a:hover, .dropdown-toggle:hover { color: var(--accent); }
+
+        /* Dropdown (Legal) */
+        .dropdown { position: relative; }
+        .dropdown-toggle i { font-size: 0.7rem; margin-left: 4px; }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            min-width: 190px;
+            padding: 8px;
+            margin-top: 8px;
+            background: var(--bg-card);
+            border: 1px solid rgba(172, 142, 253, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .dropdown::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 10px; }
+        .dropdown:hover .dropdown-menu, .dropdown:focus-within .dropdown-menu { display: block; }
+        .dropdown-menu a { display: block; padding: 9px 12px; border-radius: 6px; }
+        .dropdown-menu a:hover { background: rgba(172, 142, 253, 0.15); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 48px;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn:hover { transform: translateY(-3px); }
+        .btn-primary { background: var(--accent); color: var(--bg); }
+        .btn-primary:hover { background: #c2a9ff; box-shadow: 0 8px 20px rgba(172, 142, 253, 0.35); }
+        .btn-dark { background: var(--bg-card); color: #fff; }
+        .btn-dark:hover { background: #33364a; }
+        .btn-outline { border-color: var(--accent); color: #fff; background: transparent; }
+        .btn-outline:hover { background: var(--accent); color: var(--bg); }
+        .btn-sm { padding: 8px 24px; font-size: 0.8rem; border-radius: 12px; }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 110px 3% 22vh;
+            background: var(--bg);
+            overflow: hidden;
+        }
+        .hero-content { max-width: 720px; padding-left: 1%; position: relative; z-index: 2; }
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 22px;
+        }
+        .hero h1 span { color: var(--accent); }
+        .hero p { color: var(--muted); font-size: 1.05rem; margin-bottom: 34px; max-width: 560px; }
+        .buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .hero-wave {
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 100%;
+            height: 42vh;
+            min-height: 240px;
+            display: block;
         }
 
-        /* Commands Section */
+        /* Commands Section (sits on the purple wave) */
         .commands-section {
-            padding: 100px 10%;
-            background-color: #000038;
+            padding: 40px 8% 100px;
+            scroll-margin-top: 45px;
+            background-color: var(--accent);
+            color: var(--bg);
         }
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 60px;
-            color: #fff;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            color: var(--bg);
         }
-        .section-title span { color: #FDD501; }
-        
+        .section-title span { color: #fff; }
+
         .commands-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 35px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
         .command-category {
-            background: #00004B;
-            border: 1px solid rgba(253, 213, 1, 0.2);
-            border-radius: 15px;
+            background: var(--bg);
+            border-radius: 16px;
             padding: 30px;
+            color: #fff;
             transition: 0.3s;
+            box-shadow: 0 8px 25px rgba(31, 32, 41, 0.25);
         }
-        .command-category:hover {
-            transform: translateY(-5px);
-            border-color: #FDD501;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
+        .command-category:hover { transform: translateY(-5px); box-shadow: 0 14px 35px rgba(31, 32, 41, 0.4); }
         .cat-header {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #FDD501;
-            padding-bottom: 15px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--accent);
         }
-        .cat-header i { font-size: 1.5rem; color: #FDD501; }
-        .cat-header h3 { font-size: 1.4rem; color: #fff; }
-        
+        .cat-header i { font-size: 1.4rem; color: var(--accent); }
+        .cat-header h3 { font-size: 1.3rem; }
         .cmd-list { list-style: none; }
         .cmd-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.03);
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            background: var(--bg-card);
             border-radius: 8px;
         }
-        .cmd-name {
-            font-family: 'Courier New', monospace;
-            color: #FDD501;
-            font-weight: 700;
-        }
-        .cmd-desc { color: #aaa; font-size: 0.9rem; text-align: right; }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px;
-            background-color: #000029;
-            color: #777;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
+        .cmd-name { font-family: 'Courier New', monospace; color: var(--accent); font-weight: 700; }
+        .cmd-desc { color: var(--muted); font-size: 0.9rem; text-align: right; }
 
         /* Legal Pages (Terms & Privacy) */
-        [hidden] { display: none !important; }
-        .legal-page {
-            padding: 130px 10% 80px;
-            min-height: 100vh;
-            background: radial-gradient(circle at top right, #1a1a6e, #00004B);
-        }
+        .legal-page { padding: 130px 8% 80px; min-height: 100vh; background: var(--bg); }
         .legal-box {
             max-width: 850px;
             margin: 0 auto;
-            background: rgba(0, 0, 56, 0.85);
-            border: 1px solid rgba(253, 213, 1, 0.25);
+            background: var(--bg-card);
+            border: 1px solid rgba(172, 142, 253, 0.25);
+            border-top: 5px solid var(--accent);
             border-radius: 15px;
             padding: 45px;
         }
-        .legal-box h1 { font-size: 2.4rem; color: #FDD501; margin-bottom: 5px; }
-        .legal-box .updated { color: #aaa; font-size: 0.9rem; margin-bottom: 30px; }
+        .legal-box h1 { font-size: 2.3rem; color: var(--accent); margin-bottom: 5px; }
+        .legal-box .updated { color: var(--muted); font-size: 0.9rem; margin-bottom: 30px; }
         .legal-box h2 {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: #fff;
             margin: 28px 0 10px;
             padding-bottom: 6px;
-            border-bottom: 1px solid rgba(253, 213, 1, 0.3);
+            border-bottom: 1px solid rgba(172, 142, 253, 0.3);
         }
-        .legal-box p, .legal-box li { color: #d5d5d5; font-size: 0.95rem; }
+        .legal-box p, .legal-box li { color: #d5d6e0; font-size: 0.95rem; }
         .legal-box p { margin-bottom: 10px; }
         .legal-box ul { margin: 0 0 10px 22px; }
         .legal-box li { margin-bottom: 6px; }
-        .legal-box a { color: #FDD501; text-decoration: underline; }
-        .legal-back { display: inline-flex; margin-top: 30px; }
+        .legal-box a { color: var(--accent); text-decoration: underline; }
+        .legal-box a.btn { text-decoration: none; }
+        .btn-secondary { border-color: var(--accent); color: var(--accent); background: transparent; }
+        .btn-secondary:hover { background: var(--accent); color: var(--bg); }
+        .legal-back { margin-top: 30px; padding: 12px 30px; }
 
-        /* Footer links */
-        .footer-links { margin-bottom: 12px; }
-        .footer-links a { color: #aaa; margin: 0 12px; font-size: 0.9rem; transition: 0.3s; }
-        .footer-links a:hover { color: #FDD501; }
-
-        /* Animation */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        /* Footer */
+        footer { background: var(--bg-dark); border-top: 4px solid var(--accent); color: var(--muted); }
+        .footer-main {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 5% 40px;
         }
+        .footer-brand .logo { margin-bottom: 14px; color: #fff; }
+        .footer-brand p { font-size: 0.92rem; max-width: 320px; }
+        .footer-col h4 {
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        .footer-col a { display: block; margin-bottom: 10px; font-size: 0.92rem; transition: 0.25s; }
+        .footer-col a:hover { color: var(--accent); transform: translateX(3px); }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+            padding: 22px 5%;
+            font-size: 0.88rem;
+        }
+        .footer-bottom span { color: var(--accent); font-weight: 700; }
+
+        /* Mobile menu button */
+        .menu-btn { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
 
         /* Mobile Responsive */
         @media (max-width: 900px) {
-            .hero { flex-direction: column-reverse; text-align: center; padding-top: 120px; }
-            .hero-content { max-width: 100%; }
-            .buttons { justify-content: center; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero p { border: none; padding: 0; }
-            .navbar { padding: 15px 5%; }
+            .menu-btn { display: block; }
+            .nav-left { gap: 0; }
+            .nav-right { display: none; }
+            .navbar.open { flex-wrap: wrap; }
+            .navbar.open .nav-right, .navbar.open .nav-links { display: flex; }
             .nav-links { display: none; }
-            
+            .navbar.open .nav-left { width: 100%; justify-content: space-between; }
+            .navbar.open .nav-links, .navbar.open .nav-right {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 14px;
+                padding: 16px 0 6px;
+            }
+            .navbar.open .dropdown-menu { position: static; display: block; box-shadow: none; background: none; border: none; padding: 4px 0 0 12px; }
+            .navbar.open .dropdown-toggle i { display: none; }
+            .hero { padding-top: 120px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            .btn { padding: 14px 32px; }
             .legal-page { padding: 110px 5% 60px; }
             .legal-box { padding: 28px 22px; }
-            .legal-box h1 { font-size: 1.9rem; }
-
-            /* Adjust image size for mobile */
-            .hero-image img {
-                width: 280px;
-                height: 280px;
-            }
+            .legal-box h1 { font-size: 1.8rem; }
+            .footer-main { grid-template-columns: 1fr 1fr; }
+            .footer-brand { grid-column: 1 / -1; }
+        }
+        @media (max-width: 520px) {
+            .footer-main { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <!-- IMAGE LOGO -->
-            <img src="minato.jpg" alt="Logo"> 
-            MINATO
+    <nav class="navbar" id="navbar">
+        <div class="nav-left">
+            <a href="#" class="logo">
+                <!-- IMAGE LOGO -->
+                <img src="minato.jpg" alt="Minato logo">
+                MINATO
+            </a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#commands">Commands</a>
+                <a href="https://discord.gg/TfpUwACFCn" target="_blank" rel="noopener">Support Server</a>
+            </div>
+            <button class="menu-btn" id="menu-btn" aria-label="Toggle menu">&#9776;</button>
         </div>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#commands">Leveling Commands</a>
-            <a href="https://discord.gg/TfpUwACFCn" target="_blank">Support Server</a>
-            <a href="#terms">Terms</a>
-            <a href="#privacy">Privacy</a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <div class="dropdown">
+                    <button class="dropdown-toggle" type="button">Legal <i class="fa-solid fa-caret-down"></i></button>
+                    <div class="dropdown-menu">
+                        <a href="#terms">Terms of Service</a>
+                        <a href="#privacy">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+            <!-- INVITE LINK -->
+            <a href="https://discord.com/oauth2/authorize?client_id=1444262996984598629&permissions=269863936&integration_type=0&scope=bot+applications.commands" class="btn btn-outline btn-sm" target="_blank" rel="noopener">Add Minato</a>
         </div>
     </nav>
 
     <!-- HOME VIEW -->
     <main id="home-view">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>The Yellow Flash<br>of Leveling</h1>
-            <p>Engage your community with the fastest leveling system on Discord. Earn XP, climb the leaderboard, and claim drops to become the next Hokage.</p>
-            <div class="buttons">
-                <!-- INVITE LINK -->
-                <a href="https://discord.com/oauth2/authorize?client_id=1444262996984598629&permissions=269863936&integration_type=0&scope=bot+applications.commands" class="btn btn-primary" target="_blank">
-                    <i class="fa-brands fa-discord"></i> Add Minato
-                </a>
-                <!-- SUPPORT LINK -->
-                <a href="https://discord.gg/TfpUwACFCn" class="btn btn-secondary" target="_blank">
-                    <i class="fa-solid fa-users"></i> Join Support
-                </a>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>It's time to use <span>Minato</span> in your server.</h1>
+                <p>Engage your community with the fastest leveling system on Discord. Earn XP, climb the leaderboard, and claim drops to become the next Hokage.</p>
+                <div class="buttons">
+                    <a href="#commands" class="btn btn-primary">Get Started</a>
+                    <!-- INVITE LINK -->
+                    <a href="https://discord.com/oauth2/authorize?client_id=1444262996984598629&permissions=269863936&integration_type=0&scope=bot+applications.commands" class="btn btn-dark" target="_blank" rel="noopener">Add to Server</a>
+                </div>
             </div>
-        </div>
-        <div class="hero-image">
-            <!-- MAIN BOT IMAGE -->
-            <img src="minato.jpg" alt="Minato Namikaze">
-        </div>
-    </section>
 
-    <!-- Commands Section -->
-    <section id="commands" class="commands-section">
-        <h2 class="section-title">Minato's <span>Scroll</span></h2>
-        
+            <!-- Wave -->
+            <svg class="hero-wave" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path fill="#ac8efd" d="M0,250 C60,285 120,265 150,215 C175,175 235,165 255,215 C275,265 285,290 325,290 C365,290 385,270 415,225 C450,175 475,160 520,160 C570,160 600,190 625,235 C645,270 665,300 700,300 C740,300 750,270 775,225 C810,160 850,90 905,90 C965,90 1010,130 1045,175 C1085,225 1125,245 1165,245 C1215,245 1250,215 1280,175 C1305,145 1350,135 1385,148 C1415,160 1430,180 1440,200 L1440,320 L0,320 Z"/>
+            </svg>
+        </section>
+
+        <!-- Commands Section -->
+        <section id="commands" class="commands-section">
+            <h2 class="section-title">Minato's <span>Scroll</span></h2>
+
         <div class="commands-container">
             
             <!-- User Commands -->
@@ -374,7 +437,7 @@
             </div>
 
         </div>
-    </section>
+        </section>
 
     </main>
 
@@ -478,19 +541,39 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-        <div class="footer-links">
-            <a href="#terms">Terms of Service</a>
-            <a href="#privacy">Privacy Policy</a>
-            <a href="https://discord.gg/TfpUwACFCn" target="_blank">Support Server</a>
+        <div class="footer-main">
+            <div class="footer-brand">
+                <a href="#" class="logo"><img src="minato.jpg" alt="Minato logo"> MINATO</a>
+                <p>The Yellow Flash of leveling. Earn XP, climb the leaderboard, unlock role rewards and claim drops in your Discord server.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigate</h4>
+                <a href="#">Home</a>
+                <a href="#commands">Commands</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1444262996984598629&permissions=269863936&integration_type=0&scope=bot+applications.commands" target="_blank" rel="noopener">Add to Server</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#terms">Terms of Service</a>
+                <a href="#privacy">Privacy Policy</a>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <a href="https://discord.gg/TfpUwACFCn" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i> Support Server</a>
+            </div>
         </div>
-        <p>&copy; 2025 Minato Bot. Created by <span style="color:#FDD501;">ZORO</span>.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Minato Bot. Created by <span>ZORO</span>.</p>
+        </div>
     </footer>
 
     <script>
         // Simple hash router: "", #commands -> home | #terms -> Terms of Service | #privacy -> Privacy Policy
         (function () {
             var home = document.getElementById('home-view');
+            var navbar = document.getElementById('navbar');
             var pages = {
                 terms: { el: document.getElementById('terms-page'), title: 'Terms of Service | Minato' },
                 privacy: { el: document.getElementById('privacy-page'), title: 'Privacy Policy | Minato' }
@@ -504,6 +587,7 @@
                 home.hidden = isPage;
                 Object.keys(pages).forEach(function (k) { pages[k].el.hidden = (k !== h); });
                 document.title = isPage ? pages[h].title : homeTitle;
+                navbar.classList.remove('open');
 
                 if (isPage || !h) {
                     window.scrollTo(0, 0);
@@ -515,6 +599,11 @@
 
             window.addEventListener('hashchange', route);
             route();
+
+            // Mobile menu toggle
+            document.getElementById('menu-btn').addEventListener('click', function () {
+                navbar.classList.toggle('open');
+            });
         })();
     </script>
 
